@@ -7,14 +7,21 @@ def computeMultiply(str)
   return num1 * num2
 end
 
-regex = /mul\(\d{1,3},\d{1,3}\)/
+regex = /(?:do\(\))|(?:don't\(\))|(?:mul\(\d{1,3},\d{1,3}\))/
 
 total = 0
+condition = true
 File.open("3.input.txt", "r") do |file|
   file.each_line do |line|
     matches = line.scan(regex)
     matches.each do |match|
-      total += computeMultiply(match)
+      if match === "do()"
+        condition = true
+      elsif match === "don't()"
+        condition = false
+      elsif condition
+        total += computeMultiply(match)
+      end
     end
   end
 end
