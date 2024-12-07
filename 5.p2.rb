@@ -50,6 +50,7 @@ updates.each do |update|
 
   # Sort based on the dependencies
   update.sort! { |a, b| 
+    # If a depends on b then put b first
     if dependencies[a].include?(b)
       1
     elsif dependencies[b].include?(a)
